@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}
+
+      {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'siteapp/css/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<!-- Кнопка-переключатель -->
+<button class="weather-widget-toggle-btn" id="toggleWeather">
+    🌤 Погода
+</button>
+
+<body class="bg-dark text-light d-flex flex-column min-vh-100">
+
+    {% include 'siteapp/nav.html'%}
+
+    <!-- Контент -->
+    <main class="container" style="padding-bottom: 120px;">
+        <div>
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        </div>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <!-- Погодный виджет -->
+    <div class="weather-widget-container">
+        <div class="weather-widget">
+            <div class="weather-content">
+                <div class="weather-icon" id="weatherIcon"></div>
+                <div class="temp" id="temperature">--°</div>
+                <div class="city" id="cityName">
+                    <svg class="location-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span id="cityText">Загрузка...</span>
+                </div>
+                <div class="condition" id="weatherCondition">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    {% include 'siteapp/footer.html'%}
+
+    <!-- Скрипт для погодного виджета -->
+    <script src="{% static 'siteapp/js/weather.js' %}">
+    </script>
+
+
+    {% if title == "Урок <strong>VD08</strong>" %}
+    <script src="{% static 'siteapp/js/clock.js' %}"></script>
+    {% endif %}
+
+    {% if title == "<strong>Контакты</strong>" %}
+    <script src="{% static 'siteapp/js/pdf_loader.js' %}">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

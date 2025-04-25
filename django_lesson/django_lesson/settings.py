@@ -73,10 +73,16 @@ WSGI_APPLICATION = 'django_lesson.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+from config import dbname, user, password, host, port
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': dbname,       # Используем параметры из config.py
+        'USER': user,
+        'PASSWORD': password,
+        'HOST': host,
+        'PORT': port,
     }
 }
 
@@ -116,6 +122,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

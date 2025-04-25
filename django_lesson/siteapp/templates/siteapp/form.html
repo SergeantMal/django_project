@@ -1,0 +1,91 @@
+{% extends 'siteapp/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+    Анкета пользователя
+{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <a href="#user-form" class="btn btn-primary btn-lg">Заполнить анкету</a>
+</div>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Наши пользователи:</h2>
+    <div class="row g-4">
+        {% for user in users %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card bg-dark border-light text-light h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.name }}</h5>
+                    <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+                    <p class="card-text"><strong>Город:</strong> {{ user.city }}</p>
+                    <p class="card-text"><strong>Хобби:</strong> {{ user.hobby }}</p>
+                    <p class="card-text"><strong>Возраст:</strong> {{ user.age }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="user-form" class="container mt-5">
+    <div class="row justify-content-center mt-3 mb-3">
+        <div class="col-md-8 col-lg-6">
+            <div class="card bg-secondary text-light shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-3">Анкета пользователя</h3>
+
+                    <!-- Вывод сообщений об ошибке или успехе -->
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} mb-3">
+                            <p class="mb-0">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- Имя -->
+                        <div class="mb-2">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Имя:</label>
+                            {{ form.name|add_class:"form-control form-control-sm" }}
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-2">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email:</label>
+                            {{ form.email|add_class:"form-control form-control-sm" }}
+                        </div>
+
+                        <!-- Город -->
+                        <div class="mb-2">
+                            <label for="{{ form.city.id_for_label }}" class="form-label">Город:</label>
+                            {{ form.city|add_class:"form-control form-control-sm" }}
+                        </div>
+
+                        <!-- Хобби -->
+                        <div class="mb-2">
+                            <label for="{{ form.hobby.id_for_label }}" class="form-label">Хобби:</label>
+                            {{ form.hobby|add_class:"form-control form-control-sm" }}
+                        </div>
+
+                        <!-- Возраст -->
+                        <div class="mb-2">
+                            <label for="{{ form.age.id_for_label }}" class="form-label">Возраст:</label>
+                            {{ form.age|add_class:"form-control form-control-sm" }}
+                        </div>
+
+                        <!-- Кнопка отправки -->
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-primary btn-sm">Отправить</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

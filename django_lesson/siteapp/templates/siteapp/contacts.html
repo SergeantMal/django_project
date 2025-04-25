@@ -1,0 +1,14 @@
+{% extends 'siteapp/base.html' %}
+{% load static %}
+
+{% block title %}
+    Контакты
+{% endblock %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <!-- Добавим атрибут data-pdf-path для передачи пути -->
+        <canvas id="pdf-canvas" data-pdf-path="{% static 'siteapp/img/CV_prostyakov.pdf' %}"></canvas>
+    </div>
+
+{% endblock %}
