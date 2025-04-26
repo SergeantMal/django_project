@@ -5,13 +5,44 @@
 {% endblock %}
 
 {% block content %}
-<h2>Добро пожаловать, {{ user.name }}!</h2>
-<ul class="list-group">
-    <li class="list-group-item"><strong>Email:</strong> {{ account.email }}</li>
-    <li class="list-group-item"><strong>Город:</strong> {{ user.city }}</li>
-    <li class="list-group-item"><strong>Возраст:</strong> {{ user.age }}</li>
-    <li class="list-group-item"><strong>Хобби:</strong> {{ user.hobby }}</li>
-</ul>
-<br>
-<a href="{% url 'edit_account' %}" class="btn btn-warning">Редактировать данные</a>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm bg-primary-subtle">
+                <div class="card-header bg-blue-300">
+                    <h4 class="mb-0 text-center">Добро пожаловать, {{ user.name }}!</h4>
+                </div>
+                <div class="card-body">
+                    <div class="account-info">
+                        <div class="mb-3 ps-3">
+                            <div class="fw-bold">Email:</div>
+                            <div>{{ account.email }}</div>
+                        </div>
+
+                        <div class="mb-3 ps-3">
+                            <div class="fw-bold">Город:</div>
+                            <div>{{ user.city }}</div>
+                        </div>
+
+                        <div class="mb-3 ps-3">
+                            <div class="fw-bold">Возраст:</div>
+                            <div>{{ user.age }}</div>
+                        </div>
+
+                        <div class="mb-4 ps-3">
+                            <div class="fw-bold">Хобби:</div>
+                            <div>{{ user.hobby }}</div>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <a href="{% url 'edit_account' %}" class="btn btn-warning">
+                                <i class="bi bi-pencil-square"></i> Редактировать данные
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

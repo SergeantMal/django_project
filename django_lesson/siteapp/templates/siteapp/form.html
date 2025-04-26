@@ -33,10 +33,11 @@
 <div id="user-form" class="container mt-5">
     <div class="row justify-content-center mt-3 mb-3">
         <div class="col-md-8 col-lg-6">
-            <div class="card bg-secondary text-light shadow-sm">
+            <div class="card bg-primary-subtle shadow-sm">
+                <div class="card-header bg-blue-300">
+                    <h3 class="card-title text-center bg-blue-300 mb-3">Анкета пользователя</h3>
+                </div>
                 <div class="card-body">
-                    <h3 class="card-title text-center mb-3">Анкета пользователя</h3>
-
                     <!-- Вывод сообщений об ошибке или успехе -->
                     {% for message in messages %}
                         <div class="alert alert-{{ message.tags }} mb-3">

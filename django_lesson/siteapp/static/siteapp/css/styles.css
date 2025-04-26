@@ -203,3 +203,7 @@ html, body {
     opacity: 1;
     pointer-events: auto;
 }
+
+.bg-blue-300 {
+    background-color: #6ea8fe !important;
+  }

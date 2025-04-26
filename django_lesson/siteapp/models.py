@@ -23,9 +23,9 @@ class AccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser, PermissionsMixin):
     user_id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=20, unique=True)
-    email = models.EmailField(max_length=120, unique=True)
-    password = models.CharField(max_length=255)
+    username = models.CharField('Имя пользователя', max_length=20, unique=True)
+    email = models.EmailField('Электронная почта',max_length=120, unique=True)
+    password = models.CharField('Пароль', max_length=255)
 
     last_login = models.DateTimeField(default=timezone.now)
 
@@ -46,6 +46,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'accounts'
+        verbose_name = 'Аккаунт'
+        verbose_name_plural = 'Аккаунты'
 
     def __str__(self):
         return f'User: {self.username}, email: {self.email}'
@@ -55,14 +57,25 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    city = models.CharField(max_length=100)
-    hobby = models.TextField()
-    age = models.IntegerField()
+    name = models.CharField('Имя', max_length=100)
+    email = models.EmailField('Электронная почта', max_length=254, unique=True)
+    city = models.CharField('Город', max_length=100)
+    hobby = models.TextField('Хобби')
+    age = models.IntegerField('Возраст')
 
     class Meta:
         db_table = 'users'
 
     def __str__(self):
         return self.name
+
+from django.contrib.auth.backends import ModelBackend
+
+class EmailBackend(ModelBackend):
+    def authenticate(self, request, email=None, password=None, **kwargs):
+        try:
+            user = Account.objects.get(email=email)
+            if user.check_password(password):
+                return user
+        except Account.DoesNotExist:
+            return None

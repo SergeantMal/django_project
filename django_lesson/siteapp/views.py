@@ -52,8 +52,6 @@ def contacts(request):
         'title': '<strong>Контакты</strong>'})
 
 from .forms import UserForm
-from .models import User
-from django.contrib import messages
 
 def form_view(request):
     if request.method == "POST":
@@ -115,31 +113,45 @@ def register_view(request):
             return redirect('dashboard')
     else:
         form = RegisterForm()
-    return render(request, 'siteapp/register.html', {'form': form})
+    return render(request, 'siteapp/register.html', {'form': form, 'title': '<strong>Регистрация</strong>'})
+
+
+from django.contrib.auth import login, authenticate
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from .forms import LoginForm
+from .models import Account
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = LoginForm(request, data=request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = Account.objects.filter(email=email).first()
-            if user and user.check_password(password):
-                login(request, user)
-                messages.success(request, 'Вы вошли в систему!')
-                return redirect('dashboard')
-            else:
-                messages.error(request, 'Неверный логин или пароль')
+            user = form.get_user()
+            login(request, user)
+            if not form.cleaned_data.get('remember_me'):
+                request.session.set_expiry(0)
+            return redirect('dashboard')
+        else:
+            # Ошибки уже будут в form.non_field_errors
+            pass
     else:
-        form = LoginForm()
-    return render(request, 'siteapp/login.html', {'form': form})
+        form = LoginForm(request)
+
+    return render(request, 'siteapp/login.html', {
+        'form': form,
+        'title': '<strong>Вход в систему</strong>'
+    })
+
 
 @login_required
 def dashboard_view(request):
     account = request.user
     user = User.objects.filter(email=account.email).first()
-    return render(request, 'siteapp/account.html', {'account': account, 'user': user})
+    return render(request, 'siteapp/account.html', {'account': account, 'user': user, 'title': '<strong>Личный кабинет</strong>'})
 
 @login_required
 def edit_account_view(request):
@@ -182,7 +194,7 @@ def edit_account_view(request):
         messages.success(request, 'Данные успешно обновлены!')
         return redirect('dashboard')
 
-    return render(request, 'siteapp/edit_account.html', {'account': account, 'user': user})
+    return render(request, 'siteapp/edit_account.html', {'account': account, 'user': user,'title': '<strong>Редактированние данных</strong>'})
 
 @login_required
 def logout_view(request):
