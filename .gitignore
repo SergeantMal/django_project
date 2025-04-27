@@ -160,3 +160,4 @@ cython_debug/
 .idea/
 *~
 django_lesson/config.py
+django_lesson/django_lesson/settings_local.py

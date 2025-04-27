@@ -1,15 +1,18 @@
-from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import requests
 from datetime import datetime
 from deep_translator import GoogleTranslator
 from django.shortcuts import get_object_or_404
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Account, User  # твои модели
+from .models import Account, User
 from django.db.models import Q
 from django.contrib.auth.hashers import make_password
+from .forms import UserForm
+from .forms import RegisterForm, LoginForm
+from django.contrib import messages
+from django.shortcuts import render, redirect
+
 
 
 def index(request):
@@ -40,7 +43,7 @@ def index(request):
     return render(request, 'siteapp/index.html', {
         'quote': quote,
         'translation': translation,
-        'title': 'Урок <strong>VD08</strong>'
+        'title': 'Урок <strong>DJ02</strong>'
     })
 
 def blog(request):
@@ -51,7 +54,6 @@ def contacts(request):
     return render(request, 'siteapp/contacts.html', {
         'title': '<strong>Контакты</strong>'})
 
-from .forms import UserForm
 
 def form_view(request):
     if request.method == "POST":
@@ -97,8 +99,6 @@ def get_time(request):
         "date": formatted_date
     })
 
-from .forms import RegisterForm, LoginForm
-
 
 def register_view(request):
     if request.method == 'POST':
@@ -114,13 +114,6 @@ def register_view(request):
     else:
         form = RegisterForm()
     return render(request, 'siteapp/register.html', {'form': form, 'title': '<strong>Регистрация</strong>'})
-
-
-from django.contrib.auth import login, authenticate
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from .forms import LoginForm
-from .models import Account
 
 
 def login_view(request):
