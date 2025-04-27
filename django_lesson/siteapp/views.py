@@ -140,13 +140,13 @@ def login_view(request):
     })
 
 
-@login_required
+@login_required(login_url='login')
 def dashboard_view(request):
     account = request.user
     user = User.objects.filter(email=account.email).first()
     return render(request, 'siteapp/account.html', {'account': account, 'user': user, 'title': '<strong>Личный кабинет</strong>'})
 
-@login_required
+@login_required(login_url='login')
 def edit_account_view(request):
     account = request.user
     user = User.objects.filter(email=account.email).first()
@@ -189,7 +189,7 @@ def edit_account_view(request):
 
     return render(request, 'siteapp/edit_account.html', {'account': account, 'user': user,'title': '<strong>Редактированние данных</strong>'})
 
-@login_required
+@login_required(login_url='login')
 def logout_view(request):
     logout(request)
     messages.info(request, 'Вы вышли из системы.')

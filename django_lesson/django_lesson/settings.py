@@ -85,6 +85,10 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+LOGIN_URL = 'login'  # имя URL-шаблона вашей страницы входа
+LOGIN_REDIRECT_URL = 'dashboard'  # куда перенаправлять после успешного входа
+LOGOUT_REDIRECT_URL = 'login'  # куда перенаправлять после выхода
+
 # Локальные настройки
 try:
     from .settings_local import *
