@@ -43,7 +43,7 @@ def index(request):
     return render(request, 'siteapp/index.html', {
         'quote': quote,
         'translation': translation,
-        'title': 'Урок <strong>DJ02</strong>'
+        'title': 'Урок <strong>DJ03</strong>'
     })
 
 
