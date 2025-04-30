@@ -12,6 +12,25 @@
         <div class="row">
             <!-- Основной контент -->
             <div class="col-md-8">
+                {% for post in news %}
+                    <div class="mb-4">
+                        <h2>{{ post.title }}</h2>
+                        <p>{{ post.short_description }}</p>
+                        <p align="right">Дата публикации: {{ post.pub_date }}</p>
+                        <p align="right">Автор: {{ post.author }}</p>
+                        <br>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#post{{ post.id }}">
+                            Читать далее
+                        </button>
+                        <div class="collapse mt-2" id="post{{ post.id }}">
+                            <div class="card card-body bg-dark border-primary">
+                                {{ post.text }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
                 <div class="mb-4">
                     <h2>Заголовок статьи</h2>
                     <p>04 апреля 2025</p>
