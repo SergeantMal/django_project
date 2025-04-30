@@ -46,9 +46,6 @@ def index(request):
         'title': 'Урок <strong>DJ02</strong>'
     })
 
-def blog(request):
-    return render(request, 'siteapp/blog.html', {
-        'title': '<strong>Блог</strong>'})
 
 def contacts(request):
     return render(request, 'siteapp/contacts.html', {
